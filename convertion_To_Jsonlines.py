@@ -1,12 +1,10 @@
 import json
 import os
 
-# Configurações
-input_path = "C:/Users/Kelvin/Desktop/Teste/dados/file.txt"
-output_dir = "output_separado_2"
+input_path = "C:/Users/Kelvin/Desktop/ENEM-IRT/dados/file.txt"
+output_dir = "dados_jsonlines"
 os.makedirs(output_dir, exist_ok=True)
 
-# Arquivos de saída
 output_paths = {
     "MT": os.path.join(output_dir, "1 - respostas_MT.jsonl"),
     "CN": os.path.join(output_dir, "2 - respostas_CN.jsonl"),
@@ -16,11 +14,9 @@ output_paths = {
     "IN": os.path.join(output_dir, "6 - respostas_IN.jsonl")
 }
 
-# ---- Funções de Processamento ----
-
 
 def processar_materias_principais(respostas, subject_id):
-    """Processa MT, CN, CH, LC (itens 0-169)"""
+
     areas = {
         "MT": (0, 45),
         "CN": (45, 90),
@@ -42,18 +38,11 @@ def processar_materias_principais(respostas, subject_id):
 
 
 def processar_linguas(respostas, subject_id):
-    """
-    Processa os últimos 10 itens (170-179) de um aluno:
-    - Se o item 170 for "0" ou "1", salva itens [0] a [4] (170-174) em ES
-    - Se o item 170 for "NaN", salva itens [5] a [9] (175-179) em IN
-    """
-    # Pega os últimos 10 itens (170-179)
     ultimos_10 = respostas[-10:] if len(respostas) >= 10 else []
 
     item_170 = ultimos_10[0]
 
     if item_170 in ["0", "1"]:
-        # Salva ES (itens 170-174 = índices 0 a 4 nos últimos 10)
         es_respostas = {
             str(i+170): int(ultimos_10[i])
             for i in range(5)
@@ -69,7 +58,6 @@ def processar_linguas(respostas, subject_id):
                 f.write('\n')
 
     else:
-        # Salva IN (itens 175-179 = índices 5 a 9 nos últimos 10)
         in_respostas = {
             str(i + 170): int(ultimos_10[i])
             for i in range(5, 10)
@@ -86,8 +74,7 @@ def processar_linguas(respostas, subject_id):
 
 
 def main():
-    # limpar_arquivos_anteriores()
-    # mostrar_item_170(input_path)
+
 
     with open(input_path, 'r') as f_in:
         for subject_id, line in enumerate(f_in):
