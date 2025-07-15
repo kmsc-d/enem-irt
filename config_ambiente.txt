@@ -1,0 +1,23 @@
+Configurar ambiente virtual:
+
+cd C:\Users\Kelvin\Desktop\ENEM-IRT
+
+Criar o ambiente:
+&"C:\Users\Kelvin\AppData\Local\Programs\Python\Python311\python.exe" -m venv enem_venv
+
+Ativar o ambiente virtual:
+.\enem_venv\Scripts\activate
+
+Instalar dependências:
+
+pip install -r requirements.txt
+
+Congelar versões:
+pip freeze > requirements.txt
+
+Abra "py.ipynb" no VSCode
+
+No canto superior direito, clique no kernel atual
+
+Escolha "enem_irt"
+
